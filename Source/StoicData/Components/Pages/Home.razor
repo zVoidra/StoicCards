@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<h1>Insert Data</h1>
+
+<div>
+  <h2>Quote</h2>
+  <input @bind="quoteInput" placeholder="Enter the quote..." />
+  <h2>Author</h2>
+  <input />
+</div>
+<div>
+  <button>Save</button>
+</div>
+
+<p>Quote</p>
+<pre>@quoteInput</pre>
+
+@code {
+  private string quoteInput;
+}
