@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using StoicData.Components.Utilities;
 
 <h1>Insert Data</h1>
 
@@ -6,10 +7,10 @@
   <h2>Quote</h2>
   <input @bind="quoteInput" placeholder="Enter the quote..." />
   <h2>Author</h2>
-  <input />
+  <input @bind="quoteAuthor" placeholder="Enter the author..." />
 </div>
 <div>
-  <button>Save</button>
+  <button @onclick="SaveAsXml">Save</button>
 </div>
 
 <p>Quote</p>
@@ -17,4 +18,10 @@
 
 @code {
   private string quoteInput;
+  private string quoteAuthor;
+
+  public void SaveAsXml()
+  {
+    XmlFileManager.SaveToXml(quoteInput, quoteAuthor);
+  }
 }
