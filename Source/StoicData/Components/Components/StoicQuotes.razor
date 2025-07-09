@@ -1,0 +1,28 @@
+@using StoicData.Components.Utilities;
+
+<div class="">
+  <div class="">
+    <h2>Quote</h2>
+    <input @bind="quoteInput" placeholder="Enter the quote..." />
+    <h2>Author</h2>
+    <input @bind="quoteAuthor" placeholder="Enter the author..." />
+    <button @onclick="SaveAsXml">Save</button>
+  </div>
+  <div>
+    <h1>Quotes</h1>
+  </div>
+</div>
+
+
+<p>Quote</p>
+<pre>@quoteInput</pre>
+
+@code {
+  private string quoteInput;
+  private string quoteAuthor;
+
+  public void SaveAsXml()
+  {
+    XmlFileManager.SaveToXml(quoteInput, quoteAuthor);
+  }
+}

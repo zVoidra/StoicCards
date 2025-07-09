@@ -1,27 +1,4 @@
 ﻿@page "/"
-@using StoicData.Components.Utilities;
 
 <h1>Insert Data</h1>
-
-<div>
-  <h2>Quote</h2>
-  <input @bind="quoteInput" placeholder="Enter the quote..." />
-  <h2>Author</h2>
-  <input @bind="quoteAuthor" placeholder="Enter the author..." />
-</div>
-<div>
-  <button @onclick="SaveAsXml">Save</button>
-</div>
-
-<p>Quote</p>
-<pre>@quoteInput</pre>
-
-@code {
-  private string quoteInput;
-  private string quoteAuthor;
-
-  public void SaveAsXml()
-  {
-    XmlFileManager.SaveToXml(quoteInput, quoteAuthor);
-  }
-}
+<StoicData.Components.Components.StoicQuotes />
