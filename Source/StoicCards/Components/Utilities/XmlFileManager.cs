@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace StoicData.Components.Utilities;
+namespace StoicCards.Components.Utilities;
 
 internal static class XmlFileManager
 {
