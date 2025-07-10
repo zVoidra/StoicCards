@@ -6,7 +6,7 @@ internal static class XmlFileManager
 {
   private const string DefaultFilePath = @"C:\temp\StoicQuote";
 
-  public static void SaveToXml(string quote, string author)
+  public static string GenerateXml(string quote, string author)
   {
     XDocument doc = new XDocument(
       new XElement("StoicQuote",
@@ -15,11 +15,8 @@ internal static class XmlFileManager
       )
     );
 
-    if (Directory.Exists(Path.GetDirectoryName(DefaultFilePath)) == false)
-    {
-      Directory.CreateDirectory(Path.GetDirectoryName(DefaultFilePath));
-    }
+    return doc.ToString();
 
-    doc.Save(DefaultFilePath + DateTime.Now.ToString("_yyyy-mm-dd_HH-mm-ss") + ".xml");
+    //doc.Save(DefaultFilePath + DateTime.Now.ToString("_yyyy-mm-dd_HH-mm-ss") + ".xml");
   }
 }
