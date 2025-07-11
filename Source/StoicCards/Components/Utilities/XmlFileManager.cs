@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using StoicCards.Components.Models;
 
 namespace StoicCards.Components.Utilities;
 
@@ -6,17 +7,24 @@ internal static class XmlFileManager
 {
   private const string DefaultFilePath = @"C:\temp\StoicQuote";
 
-  public static string GenerateXml(string quote, string author)
+  public static string GenerateXml(List<StoicQuoteModel> stoicQuotes)
   {
     XDocument doc = new XDocument(
-      new XElement("StoicQuote",
-        new XElement("Quote", quote),
-        new XElement("Author", author)
-      )
-    );
+      new XElement("StoicQuotes")
+      );
+    XElement? mainElement = doc.Root;
 
+    if (mainElement == null)
+      return string.Empty;
+
+    foreach (StoicQuoteModel stoicQuote in stoicQuotes)
+    {
+      mainElement.Add(
+        new XElement("StoicQuote",
+          new XElement("Quote", stoicQuote.Quote),
+          new XElement("Author", stoicQuote.Author)
+      ));
+    }
     return doc.ToString();
-
-    //doc.Save(DefaultFilePath + DateTime.Now.ToString("_yyyy-mm-dd_HH-mm-ss") + ".xml");
   }
 }

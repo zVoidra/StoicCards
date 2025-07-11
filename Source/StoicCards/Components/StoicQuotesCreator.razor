@@ -47,7 +47,7 @@
 
   public async Task SaveAsXml()
   {
-    string doc = XmlFileManager.GenerateXml(quoteInput, quoteAuthor);
+    string doc = XmlFileManager.GenerateXml(stoicQuotes);
     await jsRuntime.InvokeVoidAsync("saveFile", "stoic_quotes.xml", doc);
   }
 }
