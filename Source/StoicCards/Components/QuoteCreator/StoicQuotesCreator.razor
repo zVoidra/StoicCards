@@ -1,6 +1,8 @@
-@inject IJSRuntime jsRuntime
+@using StoicCards.Models
+@using StoicCards.Services
 
-@using StoicCards.Components.Shared
+@inject IJSRuntime jsRuntime
+@inject XmlService XmlService
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
   <div style="border: 1px white solid;">
@@ -16,12 +18,7 @@
     <button @onclick="SaveAsXml">Save To File</button>
   </div>
   <div style="border: 1px white solid;">
-    <h1>File</h1>
-    @*     @foreach (StoicQuoteModel quote in stoicQuotes)
-    {
-      <p>@quote.Quote</p>
-      <p>@quote.Author</p>
-    } *@
+    <h1>Xml File</h1>
     <textarea class="xmlcontent-textarea"
               @ref="textareaRef"
               @bind="XmlContent" />
@@ -51,13 +48,13 @@
 
   public async Task SaveAsXml()
   {
-    string doc = XmlFileManager.GenerateXml(stoicQuotes);
+    string doc = XmlService.GenerateXml(stoicQuotes);
     await jsRuntime.InvokeVoidAsync("saveFile", "stoic_quotes.xml", doc);
   }
 
   private async Task UpdateXmlContent()
   {
-    string doc = XmlFileManager.GenerateXml(stoicQuotes);
+    string doc = XmlService.GenerateXml(stoicQuotes);
     XmlContent = doc;
     await JS.InvokeVoidAsync("resizeTextareaElement", textareaRef);
   }
