@@ -11,4 +11,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.6" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\QuoteCreator\Models\" />
+    <Folder Include="Components\QuoteCreator\Utilities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\data\StoicQuotes.xml" />
+  </ItemGroup>
+
 </Project>

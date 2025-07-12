@@ -1,7 +1,6 @@
 ﻿using System.Xml.Linq;
-using StoicCards.Components.Models;
 
-namespace StoicCards.Components.QuoteCreator.Utilities;
+namespace StoicCards.Components.Shared;
 
 internal static class XmlFileManager
 {

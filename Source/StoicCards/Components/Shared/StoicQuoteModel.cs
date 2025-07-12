@@ -1,4 +1,4 @@
-﻿namespace StoicCards.Components.Models;
+﻿namespace StoicCards.Components.Shared;
 
 public class StoicQuoteModel
 {
