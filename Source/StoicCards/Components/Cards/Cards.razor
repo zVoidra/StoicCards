@@ -1,13 +1,37 @@
-﻿
-@using StoicCards.Models
+﻿@using StoicCards.Models
+@using System.Xml.Linq
+
+@inject HttpClient Http
 
 <h3>StoicCards</h3>
 
+@foreach (var quote in stoicQuoteModels)
+{
+  <div class="card">
+    <p>@quote.Quote</p>
+    <p><strong>- @quote.Author</strong></p>
+  </div>
+}
+
 @code {
-  private List<StoicQuoteModel> stoicQuoteModels;
+  private string? XmlContent;
+  private XDocument? XmlDoc;
+  private List<StoicQuoteModel> stoicQuoteModels = new();
 
   protected override async Task OnInitializedAsync()
   {
-    
+    XmlContent = await Http.GetStringAsync("data/StoicQuotes.xml");
+
+    XmlDoc = XDocument.Parse(XmlContent);
+    if (XmlDoc.Root != null)
+    {
+      stoicQuoteModels = XmlDoc.Root.Elements("StoicQuote")
+        .Select(q => new StoicQuoteModel
+        {
+          Quote = q.Element("Quote")?.Value ?? string.Empty,
+          Author = q.Element("Author")?.Value ?? string.Empty
+        }).ToList();
+    }
   }
 }
+

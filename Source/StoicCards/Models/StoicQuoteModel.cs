@@ -2,8 +2,13 @@
 
 public class StoicQuoteModel
 {
-  public string Quote { get; set; }
-  public string Author { get; set; }
+  public string? Quote { get; set; }
+  public string? Author { get; set; }
+
+  public StoicQuoteModel()
+  {
+    
+  }
 
   public StoicQuoteModel(string quote, string author)
   {
