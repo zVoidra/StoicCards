@@ -2,30 +2,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StoicCards</title>
-    <base href="/" />
-    <link rel="stylesheet" href="css/app.css" />
-     <!--If you add any scoped CSS files, uncomment the following to load them-->
-    <link href="StoicCards.styles.css" rel="stylesheet" /> 
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StoicCards</title>
+  <base href="/" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/StoicCards.css" />
+  <!--If you add any scoped CSS files, uncomment the following to load them-->
+  <link href="StoicCards.styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
-    </div>
+  <div id="app">
+    <svg class="loading-progress">
+      <circle r="40%" cx="50%" cy="50%" />
+      <circle r="40%" cx="50%" cy="50%" />
+    </svg>
+    <div class="loading-progress-text"></div>
+  </div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+  <div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+  </div>
+  <script src="_framework/blazor.webassembly.js"></script>
 
   <script>
     window.saveFile = function (filename, content) {
@@ -35,6 +36,13 @@
       link.href = URL.createObjectURL(blob);
       link.click();
       URL.revokeObjectURL(link.href);
+    }
+
+    window.resizeTextareaElement = function (textarea) {
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = (textarea.scrollHeight + 100) + "px";
+      }
     }
   </script>
 </body>

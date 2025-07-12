@@ -1,0 +1,65 @@
+@inject IJSRuntime jsRuntime
+
+@using StoicCards.Components.Models
+@using StoicCards.Components.QuoteCreator.Utilities
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+  <div style="border: 1px white solid;">
+    <h2>Quote</h2>
+    <input @bind="quoteInput"
+           @onkeyup="OnKeyUp"
+           placeholder="Enter the quote..." />
+    <h2>Author</h2>
+    <input @bind="quoteAuthor"
+           @onkeyup="OnKeyUp"
+           placeholder="Enter the author..." />
+    <button @onclick="AddToList">Save</button>
+    <button @onclick="SaveAsXml">Save To File</button>
+  </div>
+  <div style="border: 1px white solid;">
+    <h1>File</h1>
+    @*     @foreach (StoicQuoteModel quote in stoicQuotes)
+    {
+      <p>@quote.Quote</p>
+      <p>@quote.Author</p>
+    } *@
+    <textarea class="xmlcontent-textarea"
+              @ref="textareaRef"
+              @bind="XmlContent" />
+  </div>
+</div>
+
+@code {
+  [Inject] private IJSRuntime JS { get; set; }
+  private ElementReference textareaRef;
+
+  private string quoteInput;
+  private string quoteAuthor;
+  private string XmlContent;
+
+  private List<StoicQuoteModel> stoicQuotes = new List<StoicQuoteModel>();
+
+  public void AddToList() => stoicQuotes.Add(new StoicQuoteModel(quoteInput, quoteAuthor));
+
+  public void OnKeyUp(KeyboardEventArgs e)
+  {
+    if (e.Key != "Enter")
+      return;
+
+    AddToList();
+    UpdateXmlContent();
+  }
+
+  public async Task SaveAsXml()
+  {
+    string doc = XmlFileManager.GenerateXml(stoicQuotes);
+    await jsRuntime.InvokeVoidAsync("saveFile", "stoic_quotes.xml", doc);
+  }
+
+  private async Task UpdateXmlContent()
+  {
+    string doc = XmlFileManager.GenerateXml(stoicQuotes);
+    XmlContent = doc;
+    await JS.InvokeVoidAsync("resizeTextareaElement", textareaRef);
+  }
+}

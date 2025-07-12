@@ -1,0 +1,11 @@
+﻿body {
+
+}
+
+.xmlcontent-textarea {
+  width: 90%;
+  height: auto;
+  background-color: transparent;
+  color: white;
+  box-sizing: content-box;
+}
