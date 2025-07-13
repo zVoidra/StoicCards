@@ -5,18 +5,18 @@
 
 <h3>StoicCards</h3>
 
-@foreach (var quote in stoicQuoteModels)
-{
-  <div class="card">
-    <p>@quote.Quote</p>
-    <p><strong>- @quote.Author</strong></p>
-  </div>
-}
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+  @foreach (var quote in stoicQuotes)
+  {
+    <Card Quote="@quote.Quote" Author="@quote.Author" />
+  }
+</div>
+
 
 @code {
   private string? XmlContent;
   private XDocument? XmlDoc;
-  private List<StoicQuoteModel> stoicQuoteModels = new();
+  private List<StoicQuoteModel> stoicQuotes = new();
 
   protected override async Task OnInitializedAsync()
   {
@@ -25,7 +25,7 @@
     XmlDoc = XDocument.Parse(XmlContent);
     if (XmlDoc.Root != null)
     {
-      stoicQuoteModels = XmlDoc.Root.Elements("StoicQuote")
+      stoicQuotes = XmlDoc.Root.Elements("StoicQuote")
         .Select(q => new StoicQuoteModel
         {
           Quote = q.Element("Quote")?.Value ?? string.Empty,

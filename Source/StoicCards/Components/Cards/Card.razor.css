@@ -1,5 +1,29 @@
-﻿.card-div {
-  border: black 1px solid;
-  width: 200px;
-  height: 100px;
+﻿@font-face {
+  font-family: 'Mea Culpa';
+  src: url('/fonts/MeaCulpa-Regular.ttf') format('truetype');
+}
+
+.card-div {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 264 / 109;
+  margin: 1rem auto;
+}
+
+  .card-div svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+.svg-frame-content {
+  padding: 2rem 2rem 0 2rem;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  font-family: "Mea Culpa", 'Times New Roman';
+  font-size: 2rem;
 }
