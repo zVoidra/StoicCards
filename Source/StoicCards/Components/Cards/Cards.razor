@@ -3,7 +3,9 @@
 
 @inject HttpClient Http
 
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4rem;">
+<div style="display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 500px)); 
+  gap: 4rem;">
   @foreach (var quote in stoicQuotes)
   {
     <Card Quote="@quote.Quote" Author="@quote.Author" />
