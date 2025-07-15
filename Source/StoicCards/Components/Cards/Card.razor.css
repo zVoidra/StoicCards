@@ -5,14 +5,13 @@
 
 .card-div {
   position: relative;
-  max-width: 500px;
-  aspect-ratio: 264 / 109;
+  aspect-ratio: 273 / 125;
   margin: auto;
 }
 
   .card-div svg {
     position: absolute;
-    width: auto;
+    width: 500px;
     height: auto;
     z-index: 1;
   }
