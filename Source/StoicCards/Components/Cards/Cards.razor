@@ -5,7 +5,9 @@
 
 <div style="display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(300px, 500px)); 
-  gap: 4rem;">
+  gap: 4rem;
+  place-content: center;
+  margin: 2vh 0 0 0;">
   @foreach (var quote in stoicQuotes)
   {
     <Card Quote="@quote.Quote" Author="@quote.Author" />
