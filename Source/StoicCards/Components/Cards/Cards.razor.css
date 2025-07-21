@@ -1,0 +1,11 @@
+﻿.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+  gap: 4rem;
+  place-content: center;
+  margin: 2vh 0 0 0;
+}
+
+.cards-grid-item {
+  border: 1px solid red;
+}
