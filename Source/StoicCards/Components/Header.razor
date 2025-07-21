@@ -2,7 +2,7 @@
 <div class="grid">
   <div class="item header"></div>
   <div class="item center">
-    <div>Stoic</div>
+    <div @onclick="GoToHomePage">Stoic</div>
   </div>
   <div class="item left1">
     <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,9 +55,18 @@
   <div class="item left2"></div>
   <div class="item right2"></div>
   <div class="item left3">
-    <button>Get a Quote</button>
+    <button @onclick="GoToHomePage">Home</button>
+    <button @onclick="GoToQuotePage">Get a Quote</button>
   </div>
   <div class="item right3">
     <button>About</button>
   </div>
 </div>
+
+@code {
+  [Inject] private NavigationManager Nav { get; set; }
+
+  private void GoToHomePage() => Nav.NavigateTo("/");
+  private void GoToQuotePage() => Nav.NavigateTo("/quote");
+}
+      

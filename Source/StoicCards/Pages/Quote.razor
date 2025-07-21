@@ -1,0 +1,56 @@
+﻿@page "/quote"
+@using System.Xml.Linq
+
+<div class="quote-container">
+  <div class="quote-block">
+    <div class="quote">
+      @QuoteSentence
+    </div>
+    <div class="author">
+      - @Author
+    </div>
+  </div>
+  <button class="button" @onclick="NextQuote">Next Quote</button>
+</div>
+
+@code {
+  private string QuoteSentence { get; set; } = "The only true wisdom is in knowing you know nothing.";
+  private string Author { get; set; } = "Socrates";
+
+  private string? xmlContent;
+  private XDocument? xmlDoc;
+  [Inject] private HttpClient? Http { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    xmlContent = await Http.GetStringAsync("data/StoicQuotes.xml");
+    xmlDoc = XDocument.Parse(xmlContent);
+
+    if (xmlDoc?.Root != null)
+    {
+      var randomQuote = xmlDoc.Root.Elements("StoicQuote")
+        .OrderBy(_ => Guid.NewGuid())
+        .FirstOrDefault();
+      if (randomQuote != null)
+      {
+        QuoteSentence = randomQuote.Element("Quote")?.Value ?? QuoteSentence;
+        Author = randomQuote.Element("Author")?.Value ?? Author;
+      }
+    }
+  }
+
+  private void NextQuote()
+  {
+    if (xmlDoc?.Root != null)
+    {
+      var randomQuote = xmlDoc.Root.Elements("StoicQuote")
+        .OrderBy(_ => Guid.NewGuid())
+        .FirstOrDefault();
+      if (randomQuote != null)
+      {
+        QuoteSentence = randomQuote.Element("Quote")?.Value ?? QuoteSentence;
+        Author = randomQuote.Element("Author")?.Value ?? Author;
+      }
+    }
+  }
+}
