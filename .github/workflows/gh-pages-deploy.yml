@@ -28,7 +28,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Publish (Release)
-        run: dotnet publish -c Release -o build
+        run: dotnet publish ./Source/StoicCards.sln -c Release -o build
 
       - name: Set correct <base href> for GitHub Pages
         shell: bash
