@@ -1,0 +1,74 @@
+name: Deploy Blazor WASM to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Publish (Release)
+        run: dotnet publish -c Release -o build
+
+      - name: Set correct <base href> for GitHub Pages
+        shell: bash
+        run: |
+          set -e
+          OUT="build/wwwroot"
+          INDEX="$OUT/index.html"
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"     # owner/repo -> repo
+          # User/Org page repos end with .github.io -> base is "/"
+          if [[ "$REPO_NAME" =~ \.github\.io$ ]]; then
+            BASE_PATH="/"
+          else
+            BASE_PATH="/${REPO_NAME}/"
+          fi
+          echo "Using BASE_PATH=$BASE_PATH"
+          # Replace any existing base href with the computed one
+          sed -i -E 's#<base href="[^"]*"#<base href="'"$BASE_PATH"'"#' "$INDEX"
+
+      - name: SPA fallback + nojekyll
+        run: |
+          OUT="build/wwwroot"
+          cp "$OUT/index.html" "$OUT/404.html"
+          touch "$OUT/.nojekyll"
+
+      # Optional: custom domain (uncomment and set your domain)
+      # - name: Add CNAME
+      #   run: echo "www.yourdomain.com" > build/wwwroot/CNAME
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
